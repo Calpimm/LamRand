@@ -27,7 +27,7 @@ class LamRand:
 
     def next_float(self):
         # Normalize the random number to [0, 1)
-        return self.next() / 0xFFFFFFFFFFFFFFFF
+        return self.next() / float(0xFFFFFFFFFFFFFFFF)
 
     def next_int(self, min_val, max_val):
         return min_val + self.next() % (max_val - min_val + 1)
