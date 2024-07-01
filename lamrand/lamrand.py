@@ -26,12 +26,14 @@ class LamRand:
         return self._pcg_step()
 
     def next_float(self):
-        return (self.next() >> 11) * (1.0 / (1 << 53))  # Normalizing to range [0, 1)
+        # Normalize the random number to [0, 1)
+        return self.next() / 0xFFFFFFFFFFFFFFFF
 
     def next_int(self, min_val, max_val):
         return min_val + self.next() % (max_val - min_val + 1)
 
     def next_gaussian(self, mean=0, stddev=1):
+        # Box-Muller transform to generate a Gaussian distribution
         u1 = self.next_float()
         u2 = self.next_float()
         z0 = (-2 * math.log(u1)) ** 0.5 * math.cos(2 * math.pi * u2)

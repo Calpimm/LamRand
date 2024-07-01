@@ -32,22 +32,22 @@ class TestLamRand(unittest.TestCase):
         print("✔ test_next passed")
 
     def test_next_float(self):
-        values = [self.randomizer.next_float() for _ in range(1000)]
+        values = [self.randomizer.next_float() for _ in range(100000)]
         mean = statistics.mean(values)
         self.assertTrue(0 <= min(values) < max(values) <= 1, "Values are out of range")
-        self.assertAlmostEqual(mean, 0.5, delta=0.05, msg="Mean is not approximately 0.5")
+        self.assertAlmostEqual(mean, 0.5, delta=0.01, msg="Mean is not approximately 0.5")
         self.save_to_excel("test_next_float", "passed", f"Mean: {mean}")
         print("✔ test_next_float passed")
 
     def test_next_int(self):
-        values = [self.randomizer.next_int(1, 10) for _ in range(1000)]
+        values = [self.randomizer.next_int(1, 10) for _ in range(100000)]
         counts = [values.count(i) for i in range(1, 11)]
-        self.assertTrue(all(90 <= count <= 110 for count in counts), "Values are not evenly distributed")
+        self.assertTrue(all(9000 <= count <= 11000 for count in counts), "Values are not evenly distributed")
         self.save_to_excel("test_next_int", "passed", f"Counts: {counts}")
         print("✔ test_next_int passed")
 
     def test_next_gaussian(self):
-        values = [self.randomizer.next_gaussian() for _ in range(1000)]
+        values = [self.randomizer.next_gaussian() for _ in range(100000)]
         mean = statistics.mean(values)
         stdev = statistics.stdev(values)
         self.assertAlmostEqual(mean, 0, delta=0.1, msg="Mean is not approximately 0")
@@ -56,11 +56,11 @@ class TestLamRand(unittest.TestCase):
         print("✔ test_next_gaussian passed")
 
     def test_next_bool(self):
-        values = [self.randomizer.next_bool() for _ in range(1000)]
+        values = [self.randomizer.next_bool() for _ in range(100000)]
         true_count = values.count(True)
         false_count = values.count(False)
-        self.assertTrue(450 <= true_count <= 550, "True values are not evenly distributed")
-        self.assertTrue(450 <= false_count <= 550, "False values are not evenly distributed")
+        self.assertTrue(49000 <= true_count <= 51000, "True values are not evenly distributed")
+        self.assertTrue(49000 <= false_count <= 51000, "False values are not evenly distributed")
         self.save_to_excel("test_next_bool", "passed", f"True: {true_count}, False: {false_count}")
         print("✔ test_next_bool passed")
 
