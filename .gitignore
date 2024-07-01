@@ -4,3 +4,9 @@ __pycache__/
 test_results.xlsx
 a.py
 test_results_advanced.xlsx
+*.pyc
+__pycache__/
+.env
+dist/
+build/
+*.egg-info/
