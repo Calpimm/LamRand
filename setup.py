@@ -1,5 +1,8 @@
 from setuptools import setup, find_packages
 
+with open('requirements.txt') as f:
+    required = f.read().splitlines()
+
 setup(
     name='LamRand',
     version='0.1.0',
@@ -10,10 +13,7 @@ setup(
     author_email='your.email@example.com',
     url='https://github.com/calpimm/LamRand',
     packages=find_packages(),
-    install_requires=[
-        'openpyxl',
-        'scipy'
-    ],
+    install_requires=required,
     classifiers=[
         'Programming Language :: Python :: 3',
         'License :: OSI Approved :: MIT License',
