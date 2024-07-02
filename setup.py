@@ -5,13 +5,13 @@ with open('requirements.txt') as f:
 
 setup(
     name='LamRand',
-    version='0.1.2',  # Increment the version number
+    version='0.1.3',  # Increment the version number
     description='A high-quality random number generator library',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
-    author='Your Name',
-    author_email='your.email@example.com',
-    url='https://github.com/yourusername/LamRand',
+    author='Kutay Irmak',
+    author_email='kutayirmak@icloud.com',
+    url='https://github.com/calpimm/LamRand',
     packages=find_packages(),
     install_requires=required,
     classifiers=[

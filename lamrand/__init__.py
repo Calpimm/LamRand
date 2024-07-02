@@ -1,0 +1,1 @@
+from .lamrand import LamRand, LamRandSecure

@@ -36,9 +36,10 @@ Here are some usage examples:
 - Importing LamRand
 
 ```python
-from lamrand.lamrand import LamRand
+from lamrand import LamRand, LamRandSecure
 
 randomizer = LamRand()
+secure_randomizer = LamRandSecure()
 ```
 
 - Generating a random integer
@@ -81,6 +82,33 @@ print(randomizer.next_string(10))
 
 ```bash
 python -m unittest discover
+```
+
+### Generating a Gaussian random number with Box-Muller transform
+
+```python
+print(randomizer.next_gaussian_box_muller())
+```
+
+## Generating a Poisson random number
+
+```python
+print(randomizer.next_poisson(3.5))
+```
+
+## Saving and loading state
+
+```python
+state = randomizer.save_state()
+randomizer.load_state(state)
+```
+## Using the secure randomizer
+
+```python
+print(secure_randomizer.next_int(1, 10))
+print(secure_randomizer.next_float())
+print(secure_randomizer.next_bool())
+print(secure_randomizer.next_string(10))
 ```
 
 ## Feedback and New Features

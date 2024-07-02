@@ -1,6 +1,7 @@
 import os
 import math
 import time
+import secrets
 
 class LamRand:
     def __init__(self, seed=None):
@@ -25,22 +26,39 @@ class LamRand:
     def next(self):
         return self._pcg_step()
 
-    def next_float(self):
-        # Normalize the random number to [0, 1)
-        return self.next() / float(0xFFFFFFFFFFFFFFFF)
-
     def next_int(self, min_val, max_val):
         return min_val + self.next() % (max_val - min_val + 1)
 
+    def next_float(self):
+        return self.next() / float(0xFFFFFFFFFFFFFFFF)
+
     def next_gaussian(self, mean=0, stddev=1):
-        # Box-Muller transform to generate a Gaussian distribution
         u1 = self.next_float()
         u2 = self.next_float()
         z0 = (-2 * math.log(u1)) ** 0.5 * math.cos(2 * math.pi * u2)
         return mean + z0 * stddev
 
+    def next_gaussian_box_muller(self, mean=0, stddev=1):
+        u1 = self.next_float()
+        u2 = self.next_float()
+        z0 = (-2 * math.log(u1)) ** 0.5 * math.cos(2 * math.pi * u2)
+        return mean + z0 * stddev
+
+    def next_poisson(self, lam):
+        L = math.exp(-lam)
+        k = 0
+        p = 1.0
+        while p > L:
+            k += 1
+            p *= self.next_float()
+        return k - 1
+
     def next_bool(self):
         return self.next() % 2 == 0
+
+    def next_string(self, length):
+        characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+        return ''.join([characters[self.next_int(0, len(characters) - 1)] for _ in range(length)])
 
     def shuffle(self, data):
         n = len(data)
@@ -49,6 +67,27 @@ class LamRand:
             data[i], data[j] = data[j], data[i]
         return data
 
-    def next_string(self, length):
+    def save_state(self):
+        return (self.state, self.increment)
+
+    def load_state(self, state):
+        self.state, self.increment = state
+
+
+class LamRandSecure:
+    @staticmethod
+    def next_int(min_val, max_val):
+        return secrets.randbelow(max_val - min_val + 1) + min_val
+
+    @staticmethod
+    def next_float():
+        return secrets.randbelow(10**18) / 10**18
+
+    @staticmethod
+    def next_bool():
+        return secrets.randbelow(2) == 0
+
+    @staticmethod
+    def next_string(length):
         characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
-        return ''.join([characters[self.next_int(0, len(characters) - 1)] for _ in range(length)])
+        return ''.join(secrets.choice(characters) for _ in range(length))
