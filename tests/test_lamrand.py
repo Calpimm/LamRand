@@ -66,6 +66,7 @@ class TestLamRandSecure(unittest.TestCase):
     def test_next_string(self):
         value = self.randomizer.next_string(10)
         self.assertEqual(len(value), 10)
+        self.assertTrue
         self.assertTrue(all(c.isalnum() for c in value))
 
 if __name__ == '__main__':

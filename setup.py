@@ -5,7 +5,7 @@ with open('requirements.txt') as f:
 
 setup(
     name='LamRand',
-    version='0.1.3',  # Increment the version number
+    version='0.1.4',  # Increment the version number
     description='A high-quality random number generator library',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
